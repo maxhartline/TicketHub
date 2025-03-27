@@ -19,7 +19,7 @@ namespace TicketHub.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Purchase purchase) // FromBody binds the JSON to the Purchase object
+        public async Task<IActionResult> Post(Purchase purchase)
         {
             if (ModelState.IsValid == false)
             {
@@ -39,10 +39,10 @@ namespace TicketHub.Controllers
 
             QueueClient queueClient = new QueueClient(connectionString, queueName);
 
-            // serialize an object to json
+            // Serialize object to JSON
             string message = JsonSerializer.Serialize(purchase);
 
-            // send string message to queue
+            // Send string message to queue
             await queueClient.SendMessageAsync(message);
 
             return Ok("Message sent to Azure queue successfully.");
