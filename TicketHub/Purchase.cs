@@ -25,6 +25,7 @@ namespace TicketHub
         public int Quantity { get; set; }
 
         [Required]
+        [CreditCard] // can i remove the string length this and use this instead?
         [StringLength(16, MinimumLength = 15, ErrorMessage = "Credit card number must be between 15 and 16 digits.")]
         public string CreditCard { get; set; }
 

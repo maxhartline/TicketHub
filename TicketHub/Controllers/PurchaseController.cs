@@ -2,6 +2,7 @@
 using Azure.Storage.Queues;
 using System.Runtime.InteropServices.Marshalling;
 using System.Text.Json;
+using System.Text;
 
 namespace TicketHub.Controllers
 {
@@ -42,8 +43,9 @@ namespace TicketHub.Controllers
             // Serialize object to JSON
             string message = JsonSerializer.Serialize(purchase);
 
-            // Send string message to queue
-            await queueClient.SendMessageAsync(message);
+            // Send string message to queue (encoding as base 64)
+            var plainTextBytes = Encoding.UTF8.GetBytes(message);
+            await queueClient.SendMessageAsync(Convert.ToBase64String(plainTextBytes));
 
             return Ok("Message sent to Azure queue successfully.");
         }
